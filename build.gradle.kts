@@ -11,10 +11,15 @@ repositories {
         name = "papermc-repo"
         url = uri("https://repo.papermc.io/repository/maven-public/")
     }
+    maven {
+        name = "denizen-repo"
+        url = uri("https://maven.citizensnpcs.co/repo")
+    }
 }
 
 dependencies {
     paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    compileOnly("com.denizenscript:denizen:1.3.1-SNAPSHOT")
 }
 
 java {
