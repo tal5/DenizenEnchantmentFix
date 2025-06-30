@@ -119,7 +119,8 @@ public class EnchantmentFixBootstrap implements PluginBootstrap {
             List<TypedKey<org.bukkit.enchantments.Enchantment>> treasure = new ArrayList<>(), curse = new ArrayList<>(), tradeable = new ArrayList<>(), discoverable = new ArrayList<>();
             for (EnchantmentScriptContainer.EnchantmentReference enchantmentReference : EnchantmentScriptContainer.registeredEnchantmentContainers.values()) {
                 EnchantmentScriptContainer enchantmentScript = enchantmentReference.script;
-                TypedKey<org.bukkit.enchantments.Enchantment> enchantmentKey = RegistryKey.ENCHANTMENT.typedKey(enchantmentScript.getKey());
+                // TODO: TypedKey<org.bukkit.enchantments.Enchantment> enchantmentKey = RegistryKey.ENCHANTMENT.typedKey(enchantmentScript.getKey());
+                TypedKey<org.bukkit.enchantments.Enchantment> enchantmentKey = RegistryKey.ENCHANTMENT.typedKey(Key.key("denizen", enchantmentScript.id));
                 if (enchantmentScript.isTreasureOnly) {
                     treasure.add(enchantmentKey);
                 }
