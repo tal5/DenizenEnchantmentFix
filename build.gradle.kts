@@ -1,6 +1,6 @@
 plugins {
     java
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.16"
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.17"
 }
 
 group = "com.denizenscript.denizenenchantmentfix"
@@ -18,7 +18,7 @@ repositories {
 }
 
 dependencies {
-    paperweight.paperDevBundle("1.21.5-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("1.21.7-R0.1-SNAPSHOT")
     compileOnly("com.denizenscript:denizen:1.3.1-SNAPSHOT")
 }
 
