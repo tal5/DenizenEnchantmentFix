@@ -26,7 +26,7 @@ jobs:
     - name: Extract version
       id: get_version
       run: |
-        VERSION=$(grep '^version = ' gradle.properties | cut -d' = ' -f2)
+        VERSION=$(grep '^version = ' gradle.properties | cut -d ' ' -f 3)
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "::notice::Detected version: $VERSION"
 
