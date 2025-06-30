@@ -30,6 +30,9 @@ jobs:
         echo "version=$VERSION" >> $GITHUB_OUTPUT
         echo "::notice::Detected version: $VERSION"
 
+    - name: Change gradlew permissions
+      run: chmod +x ./gradlew
+
     - name: Build with Gradle Wrapper
       run: ./gradlew build
 
