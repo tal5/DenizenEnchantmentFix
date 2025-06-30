@@ -4,7 +4,7 @@ plugins {
 }
 
 group = "com.denizenscript.denizenenchantmentfix"
-version = "1.0-SNAPSHOT"
+version = "${project.version}-SNAPSHOT"
 
 repositories {
     maven {
