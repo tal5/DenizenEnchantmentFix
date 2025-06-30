@@ -1,5 +1,11 @@
 name: DenizenEnchantmentFix
 version: ${version}
 main: com.denizenscript.denizenenchantmentfix.DenizenEnchantmentFix
+bootstrapper: com.denizenscript.denizenenchantmentfix.EnchantmentFixBootstrap
 api-version: '1.20'
 load: STARTUP
+dependencies:
+  server:
+    Denizen:
+      load: BEFORE
+      join-classpath: true
