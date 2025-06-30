@@ -1,0 +1,60 @@
+name: Build and release
+on:
+  workflow_dispatch:
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: Set up JDK
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v4
+
+    - name: Extract version
+      id: get_version
+      run: |
+        VERSION=$(grep '^version = ' gradle.properties | cut -d' = ' -f2)
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "::notice::Detected version: $VERSION"
+
+    - name: Build with Gradle Wrapper
+      run: ./gradlew build
+
+    - name: Find JAR file
+      id: find_jar
+      run: |
+        JAR_FILE=$(find build/libs -name "*.jar" | head -1)
+        if [ -z "$JAR_FILE" ]; then
+            echo "::error::No JAR file found"
+            exit 1
+        fi
+        echo "jar_file=$JAR_FILE" >> $GITHUB_OUTPUT
+        echo "::notice::Found JAR file: $JAR_FILE"
+
+    - name: Publish release
+      env:
+        GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        TAG="v${{ steps.get_version.outputs.version }}"
+        echo "::notice::Creating release: $TAG"
+        gh release create "$TAG" --title "$TAG" --generate-notes "${{ steps.find_jar.outputs.jar_file }}"
+
+    - name: Add Summary
+      run: |
+        echo "## Release Created Successfully" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Version:** v${{ steps.get_version.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+        echo "**JAR:** ${{ steps.find_jar.outputs.jar_file }}" >> $GITHUB_STEP_SUMMARY
