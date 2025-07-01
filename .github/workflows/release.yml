@@ -51,7 +51,7 @@ jobs:
       env:
         GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null)
+        LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || true)
         CHANGELOG=$(git log ${LATEST_TAG:+$LATEST_TAG..} --no-merges --pretty=format:'- [%h](https://github.com/${{ github.repository }}/commit/%H) %s — %an')
         TAG="v${{ steps.get_version.outputs.version }}"
         echo "::notice::Creating release: $TAG"
